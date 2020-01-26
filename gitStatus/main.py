@@ -13,22 +13,20 @@ class gitStatus():
         """
         self.path = repoPath
         os.chdir(self.path)
-        self.command = subprocess.run(["git", 'status'], stdout=subprocess.PIPE).stdout.decode('utf-8').split("\n")
-        print(self.command)
+        self.command = subprocess.run(["git", "status"], stdout=subprocess.PIPE).stdout.decode('utf-8').split("\n")
 
     def untrackedFiles(self):
-        if "Untracked Files:" not in self.command:
+        if "Untracked files:" not in self.command:
             return []
         files = []
-        listFromStart = self.command[self.command.index("Untracked Files:"):]
+        listFromStart = self.command[self.command.index("Untracked files:"):]
         blankLineCount = 0
         for line in listFromStart:
+            print(line)
             if "\t" in line:
-                files.append(line)
+                files.append(line.strip("\t"))
             elif blankLineCount == 1 and line == "":
                 break
             elif line == "":
                 blankLineCount += 1
         return files
-        
-        
