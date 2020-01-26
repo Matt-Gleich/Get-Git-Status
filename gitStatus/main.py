@@ -1,6 +1,23 @@
 import os
 import subprocess
 
+def getSectionFiles(sectionIdentifier, command):
+    if sectionIdentifier not in command:
+            return []
+    files = []
+    listFromStart = command[command.index(sectionIdentifier):]
+    blankLineCount = 0
+    for line in listFromStart:
+        print(line)
+        if "\t" in line:
+            files.append(line.strip("\t"))
+        elif blankLineCount == 1 and line == "":
+            break
+        elif line == "":
+            blankLineCount += 1
+    return files
+    
+
 class gitStatus():
     """Get the git status of any repo
     """
@@ -21,17 +38,6 @@ class gitStatus():
         Returns:
             list -- List of all the files
         """
-        if "Untracked files:" not in self.command:
-            return []
+        return getSectionFiles("Untracked files:", self.command)
+    
         files = []
-        listFromStart = self.command[self.command.index("Untracked files:"):]
-        blankLineCount = 0
-        for line in listFromStart:
-            print(line)
-            if "\t" in line:
-                files.append(line.strip("\t"))
-            elif blankLineCount == 1 and line == "":
-                break
-            elif line == "":
-                blankLineCount += 1
-        return files
