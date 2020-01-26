@@ -16,6 +16,11 @@ class gitStatus():
         self.command = subprocess.run(["git", "status"], stdout=subprocess.PIPE).stdout.decode('utf-8').split("\n")
 
     def untrackedFiles(self):
+        """Get a list of all the untrackedFiles for the repo
+        
+        Returns:
+            list -- List of all the files
+        """
         if "Untracked files:" not in self.command:
             return []
         files = []
