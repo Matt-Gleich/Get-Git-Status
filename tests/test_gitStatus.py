@@ -46,4 +46,8 @@ def test_unstagedFiles():
     assert deletedResult == ["LICENSE.md"]
     os.system("git checkout .")
     os.system("git clean -fd")
-    os.system("git status")
+    # ONE UPDATED FILE
+    with open("dev-requirements.txt", "a") as file:
+        file.write("HERE IS SOME TEXT ADDED")
+    updatedResult = gitStatus(os.getcwd()).unstagedFiles()
+    assert updatedResult == ["dev-requirements.txt"]
