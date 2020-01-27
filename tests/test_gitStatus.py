@@ -6,6 +6,8 @@ sys.path.append("../gitStatus")
 from main import gitStatus
 
 def test_untrackedFiles():
+    """Test for the untrackedFiles func in main.py
+    """
     # ONE UNTRACKED FILE
     os.chdir("../gitStatus")
     os.system("touch test.txt")
@@ -31,4 +33,14 @@ def test_untrackedFiles():
     os.system("rm LICENSE.md")
     changesFilesResult = gitStatus(os.getcwd()).untrackedFiles()
     os.system("rm test.txt")
+    os.chdir("tests")
     assert changesFilesResult == ["test.txt"]
+
+def test_unstagedFiles():
+    """Test for the unstagedFiles func in main.py
+    """
+    # ONE DELETED FILE
+    os.chdir("..")
+    os.system("rm dev-requirements.txt")
+    deletedResult = gitStatus(os.getcwd()).untrackedFiles()
+    assert deletedResult == ["dev-requirements.txt"]

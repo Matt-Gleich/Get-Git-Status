@@ -47,5 +47,16 @@ class gitStatus():
             list -- List of all the files
         """
         return getSectionFiles("Untracked files:", self.command)
-    
-        files = []
+
+    def unstagedFiles(self):
+        """Get a list of all the unstaged files for the repo
+        
+        Returns:
+            list -- List of all the files
+        """
+        files = getSectionFiles("Changes not staged for commit:", self.command)
+        cleanedFiles = []
+        for file in files:
+            cleanedFile = file.strip("deleted:").strip("modified:").strip()
+            cleanedFiles.append(cleanedFile)
+        return cleanedFiles
