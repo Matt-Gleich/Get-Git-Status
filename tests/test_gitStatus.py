@@ -44,3 +44,6 @@ def test_unstagedFiles():
     # Already deleted LICENSE.md from test_untrackedFiles
     deletedResult = gitStatus(os.getcwd()).unstagedFiles()
     assert deletedResult == ["LICENSE.md"]
+    os.system("git checkout .")
+    os.system("git clean -fd")
+    os.system("git status")
