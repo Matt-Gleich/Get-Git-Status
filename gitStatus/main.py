@@ -5,7 +5,7 @@ def getSectionFiles(sectionIdentifier, command):
     """Get the files for a certain part of the git status command
     
     Arguments:
-        sectionIdentifier {str} -- The string that idenfies the file list section
+        sectionIdentifier {str} -- The string that identifies the file list section
         command {list} -- The git status command ran
     
     Returns:
