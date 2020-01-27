@@ -2,13 +2,21 @@ import os
 import subprocess
 
 def getSectionFiles(sectionIdentifier, command):
+    """Get the files for a certain part of the git status command
+    
+    Arguments:
+        sectionIdentifier {str} -- The string that idenfies the file list section
+        command {list} -- The git status command ran
+    
+    Returns:
+        list -- List of files if any
+    """
     if sectionIdentifier not in command:
             return []
     files = []
     listFromStart = command[command.index(sectionIdentifier):]
     blankLineCount = 0
     for line in listFromStart:
-        print(line)
         if "\t" in line:
             files.append(line.strip("\t"))
         elif blankLineCount == 1 and line == "":
