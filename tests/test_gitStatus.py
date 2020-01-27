@@ -41,6 +41,6 @@ def test_unstagedFiles():
     """
     # ONE DELETED FILE
     os.chdir("..")
-    os.system("rm dev-requirements.txt")
-    deletedResult = gitStatus(os.getcwd()).untrackedFiles()
-    assert deletedResult == ["dev-requirements.txt"]
+    # Already deleted LICENSE.md from test_untrackedFiles
+    deletedResult = gitStatus(os.getcwd()).unstagedFiles()
+    assert deletedResult == ["LICENSE.md"]
