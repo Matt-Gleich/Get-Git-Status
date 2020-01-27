@@ -12,7 +12,7 @@ def getSectionFiles(sectionIdentifier, command):
         list -- List of files if any
     """
     if sectionIdentifier not in command:
-            return []
+        return []
     files = []
     listFromStart = command[command.index(sectionIdentifier):]
     blankLineCount = 0
@@ -57,6 +57,6 @@ class gitStatus():
         files = getSectionFiles("Changes not staged for commit:", self.command)
         cleanedFiles = []
         for file in files:
-            cleanedFile = file.strip("deleted:").strip("modified:").strip()
+            cleanedFile = file.replace("deleted:", "").replace("modified:", "").strip()
             cleanedFiles.append(cleanedFile)
         return cleanedFiles
