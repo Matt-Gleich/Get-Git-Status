@@ -64,4 +64,5 @@ def test_unstagedFiles():
         file.write("HERE IS SOME TEXT ADDED")
     multipleFilesResult = gitStatus(os.getcwd()).unstagedFiles()
     assert multipleFilesResult == ['LICENSE.md', 'dev-requirements.txt']
+    os.chdir("tests")
     resetGit()
