@@ -71,11 +71,16 @@ class gitStatus():
         """Get a list of all the unstaged files for the repo
 
         Returns:
-            list -- List of all the files
+            dict -- List of all the files and they're statuses
         """
         files = getSectionFiles("Changes not staged for commit:", self.command)
         return matchFileAndStatus(files)
 
     def stagedFiles(self):
+        """Get a list of all the staged files for the repo
+        
+        Returns:
+            dict -- List of all the files and they're statuses
+        """
         files = getSectionFiles("Changes to be committed:", self.command)
         return matchFileAndStatus(files)
