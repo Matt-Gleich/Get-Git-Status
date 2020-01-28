@@ -46,18 +46,19 @@ def test_unstagedFiles():
     os.system("rm LICENSE.md")
     deletedResult = gitStatus(os.getcwd()).unstagedFiles()
     os.system("git reset --hard")
-    assert deletedResult == ["LICENSE.md"]
+    assert deletedResult == {"LICENSE.md": "deleted"}
     # ONE UPDATED FILE
     with open("dev-requirements.txt", "a") as file:
         file.write("HERE IS SOME TEXT ADDED")
     updatedResult = gitStatus(os.getcwd()).unstagedFiles()
     os.system("git reset --hard")
-    assert updatedResult == ["dev-requirements.txt"]
+    assert updatedResult == {"dev-requirements.txt": "modified"}
     # MULTIPLE FILES
     os.system("rm LICENSE.md")
     with open("dev-requirements.txt", "a") as file:
         file.write("HERE IS SOME TEXT ADDED")
     multipleFilesResult = gitStatus(os.getcwd()).unstagedFiles()
-    assert multipleFilesResult == ['LICENSE.md', 'dev-requirements.txt']
+    assert multipleFilesResult == {"LICENSE.md": "deleted", "dev-requirements.txt": "modified"}
     os.chdir("tests")
     os.system("git reset --hard")
+

@@ -25,23 +25,21 @@ def getSectionFiles(sectionIdentifier, command):
             blankLineCount += 1
     return files
     
-def cleanFiles(removeList, files):
-    """Clean files by removing certain parts of the file name
+def matchFileAndStatus(fileList):
+    """Match a file with it current status
     
     Arguments:
-        removeList {list} -- Things to remove from the file
-        files {list} -- List of files
+        fileList {list} -- List of all files read from the git status command
     
     Returns:
-        list -- List of cleaned files
+        dict -- Matched files
     """
-    cleanedFiles = []
-    for file in files:
-        for removeable in removeList:
-            file = file.replace(removeable, "")
-        file = file.strip()
-        cleanedFiles.append(file)
-    return cleanedFiles
+    matchedFiles = {}    
+    for file in fileList:
+        status = file.split(":")[0]
+        file = file.split(":")[-1].strip()
+        matchedFiles[file] = status
+    return matchedFiles
 
 
 class gitStatus():
@@ -73,4 +71,8 @@ class gitStatus():
             list -- List of all the files
         """
         files = getSectionFiles("Changes not staged for commit:", self.command)
-        return cleanFiles(["deleted:", "modified:"], files)
+        return matchFileAndStatus(files)
+    
+    def stagedFiles(self):
+        files = getSectionFiles("Changes to be committed:", self.command)
+        return matchFileAndStatus(files)
