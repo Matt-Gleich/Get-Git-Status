@@ -62,3 +62,30 @@ def test_unstagedFiles():
     os.chdir("tests")
     os.system("git reset --hard")
 
+def test_stagedFiles():
+    """Test for the stagedFiles func in main.py
+    """
+    # ONE DELETED FILE
+    os.chdir("..")
+    os.system("rm LICENSE.md")
+    os.system("git add .")
+    deletedResult = gitStatus(os.getcwd()).stagedFiles()
+    os.system("git reset --hard")
+    assert deletedResult == {"LICENSE.md": "deleted"}
+    # ONE UPDATED FILE
+    with open("dev-requirements.txt", "a") as file:
+        file.write("HERE IS SOME TEXT ADDED")
+    os.system("git add .")
+    updatedResult = gitStatus(os.getcwd()).unstagedFiles()
+    os.system("git reset --hard")
+    assert updatedResult == {"dev-requirements.txt": "modified"}
+    # MULTIPLE FILES
+    os.system("rm LICENSE.md")
+    with open("dev-requirements.txt", "a") as file:
+        file.write("HERE IS SOME TEXT ADDED")
+    os.system("git add .")
+    multipleFilesResult = gitStatus(os.getcwd()).unstagedFiles()
+    assert multipleFilesResult == {"LICENSE.md": "deleted", "dev-requirements.txt": "modified"}
+    os.chdir("tests")
+    os.system("git reset --hard")
+
