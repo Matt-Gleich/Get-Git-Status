@@ -2,8 +2,13 @@ import sys
 import subprocess
 import os
 sys.path.append("../gitStatus")
-
 from main import gitStatus
+
+def resetGit():
+    """Reset local git changes
+    """
+    os.system("git reset")
+    os.system("git checkout .")
 
 
 def test_untrackedFiles():
@@ -36,7 +41,8 @@ def test_untrackedFiles():
     os.system("rm test.txt")
     os.chdir("tests")
     assert changesFilesResult == ["test.txt"]
-    os.system("git reset --hard")
+    resetGit()
+
 
 def test_unstagedFiles():
     """Test for the unstagedFiles func in main.py
@@ -45,22 +51,24 @@ def test_unstagedFiles():
     os.chdir("..")
     os.system("rm LICENSE.md")
     deletedResult = gitStatus(os.getcwd()).unstagedFiles()
-    os.system("git reset --hard")
+    resetGit()
     assert deletedResult == {"LICENSE.md": "deleted"}
     # ONE UPDATED FILE
     with open("dev-requirements.txt", "a") as file:
         file.write("HERE IS SOME TEXT ADDED")
     updatedResult = gitStatus(os.getcwd()).unstagedFiles()
-    os.system("git reset --hard")
+    resetGit()
     assert updatedResult == {"dev-requirements.txt": "modified"}
     # MULTIPLE FILES
     os.system("rm LICENSE.md")
     with open("dev-requirements.txt", "a") as file:
         file.write("HERE IS SOME TEXT ADDED")
     multipleFilesResult = gitStatus(os.getcwd()).unstagedFiles()
-    assert multipleFilesResult == {"LICENSE.md": "deleted", "dev-requirements.txt": "modified"}
+    assert multipleFilesResult == {
+        "LICENSE.md": "deleted", "dev-requirements.txt": "modified"}
     os.chdir("tests")
-    os.system("git reset --hard")
+    resetGit()
+
 
 def test_stagedFiles():
     """Test for the stagedFiles func in main.py
@@ -70,14 +78,14 @@ def test_stagedFiles():
     os.system("rm LICENSE.md")
     os.system("git add .")
     deletedResult = gitStatus(os.getcwd()).stagedFiles()
-    os.system("git reset --hard")
+    resetGit()
     assert deletedResult == {"LICENSE.md": "deleted"}
     # ONE UPDATED FILE
     with open("dev-requirements.txt", "a") as file:
         file.write("HERE IS SOME TEXT ADDED")
     os.system("git add .")
     updatedResult = gitStatus(os.getcwd()).unstagedFiles()
-    os.system("git reset --hard")
+    resetGit()
     assert updatedResult == {"dev-requirements.txt": "modified"}
     # MULTIPLE FILES
     os.system("rm LICENSE.md")
@@ -85,7 +93,7 @@ def test_stagedFiles():
         file.write("HERE IS SOME TEXT ADDED")
     os.system("git add .")
     multipleFilesResult = gitStatus(os.getcwd()).unstagedFiles()
-    assert multipleFilesResult == {"LICENSE.md": "deleted", "dev-requirements.txt": "modified"}
+    assert multipleFilesResult == {
+        "LICENSE.md": "deleted", "dev-requirements.txt": "modified"}
     os.chdir("tests")
-    os.system("git reset --hard")
-
+    resetGit()
