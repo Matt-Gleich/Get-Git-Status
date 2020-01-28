@@ -7,7 +7,7 @@ from main import gitStatus
 def resetGit():
     """Reset local git changes
     """
-    os.system("git reset")
+    os.system("git reset --hard")
     os.system("git checkout .")
 
 
@@ -84,7 +84,7 @@ def test_stagedFiles():
     with open("dev-requirements.txt", "a") as file:
         file.write("HERE IS SOME TEXT ADDED")
     os.system("git add .")
-    updatedResult = gitStatus(os.getcwd()).unstagedFiles()
+    updatedResult = gitStatus(os.getcwd()).stagedFiles()
     resetGit()
     assert updatedResult == {"dev-requirements.txt": "modified"}
     # MULTIPLE FILES
@@ -92,7 +92,7 @@ def test_stagedFiles():
     with open("dev-requirements.txt", "a") as file:
         file.write("HERE IS SOME TEXT ADDED")
     os.system("git add .")
-    multipleFilesResult = gitStatus(os.getcwd()).unstagedFiles()
+    multipleFilesResult = gitStatus(os.getcwd()).stagedFiles()
     assert multipleFilesResult == {
         "LICENSE.md": "deleted", "dev-requirements.txt": "modified"}
     os.chdir("tests")
