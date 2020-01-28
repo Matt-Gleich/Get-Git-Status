@@ -75,4 +75,5 @@ class gitStatus():
     
     def stagedFiles(self):
         files = getSectionFiles("Changes to be committed:", self.command)
+        print(files)
         return matchFileAndStatus(files)
