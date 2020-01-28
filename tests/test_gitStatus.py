@@ -5,11 +5,6 @@ sys.path.append("../gitStatus")
 
 from main import gitStatus
 
-def resetGit():
-    """Reset all the changes done locally
-    """
-    os.system("git checkout .")
-    os.system("git clean -fd")
 
 def test_untrackedFiles():
     """Test for the untrackedFiles func in main.py
@@ -41,7 +36,7 @@ def test_untrackedFiles():
     os.system("rm test.txt")
     os.chdir("tests")
     assert changesFilesResult == ["test.txt"]
-    resetGit()
+    os.system("git reset --hard")
 
 def test_unstagedFiles():
     """Test for the unstagedFiles func in main.py
@@ -50,13 +45,13 @@ def test_unstagedFiles():
     os.chdir("..")
     os.system("rm LICENSE.md")
     deletedResult = gitStatus(os.getcwd()).unstagedFiles()
-    resetGit()
+    os.system("git reset --hard")
     assert deletedResult == ["LICENSE.md"]
     # ONE UPDATED FILE
     with open("dev-requirements.txt", "a") as file:
         file.write("HERE IS SOME TEXT ADDED")
     updatedResult = gitStatus(os.getcwd()).unstagedFiles()
-    resetGit()
+    os.system("git reset --hard")
     assert updatedResult == ["dev-requirements.txt"]
     # MULTIPLE FILES
     os.system("rm LICENSE.md")
@@ -65,4 +60,4 @@ def test_unstagedFiles():
     multipleFilesResult = gitStatus(os.getcwd()).unstagedFiles()
     assert multipleFilesResult == ['LICENSE.md', 'dev-requirements.txt']
     os.chdir("tests")
-    resetGit()
+    os.system("git reset --hard")
