@@ -1,6 +1,8 @@
-# Get-Git-Status
+# Get-Git-Status ![PyPI](https://img.shields.io/pypi/v/gitStatus)
 
 [![Actions Status](https://github.com/Matt-Gleich/Get-Git-Status/workflows/Python-Versions/badge.svg)](https://github.com/Matt-Gleich/Get-Git-Status/actions) [![Actions Status](https://github.com/Matt-Gleich/Get-Git-Status/workflows/Python-Cron/badge.svg)](https://github.com/Matt-Gleich/Python-Cron/actions)
+
+![PyPI - Format](https://img.shields.io/pypi/format/gitStatus) ![PyPI - Status](https://img.shields.io/pypi/status/gitStatus)
 
 Get-Git-Status is a PyPi package that allows you to get the git status of any repo. Look down below to see the documentation that will explain this more.
 
@@ -8,10 +10,7 @@ Get-Git-Status is a PyPi package that allows you to get the git status of any re
 
 gitStatus is confirmed to work with the following versions:
 
-1. Python 3.5
-2. Python 3.6 and 3.6-dev
-3. Python 3.7 and 3.7-dev
-4. Python 3.8 and 3.8-dev
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/gitStatus)
 
 One you have one of the supported versions make sure you have pip installed and install gitStatus with the following commands:
 
