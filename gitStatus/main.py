@@ -57,7 +57,7 @@ class gitStatus():
         self.path = repoPath
         os.chdir(self.path)
         self.command = subprocess.run(
-            ["git", "status"], stdout=subprocess.PIPE).stdout.decode('utf-8').split("\n")
+            ["git", "status", "-u"], stdout=subprocess.PIPE).stdout.decode('utf-8').split("\n")
 
     def untrackedFiles(self):
         """Get a list of all the untrackedFiles for the repo
@@ -78,7 +78,7 @@ class gitStatus():
 
     def stagedFiles(self):
         """Get a list of all the staged files for the repo
-        
+
         Returns:
             dict -- List of all the files and they're statuses
         """
